@@ -1,10 +1,10 @@
 package com.example.demo.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "shops")
@@ -52,4 +52,14 @@ public class Shop {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+public String toString() {
+    return "Shop{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", address='" + address + '\'' +
+            ", status='" + status + '\'' +
+            '}';
+}
 }
