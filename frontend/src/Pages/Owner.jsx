@@ -11,7 +11,7 @@ function Owner() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/shops/${id}`)
+        axios.get(`https://localkart-pmni.onrender.com/shops/${id}`)
             .then((response) => {
                 setShop(response.data);
                 setStatus(response.data.status);
@@ -36,7 +36,7 @@ function Owner() {
         setStatus(newStatus);
 
         axios.put(
-            `http://localhost:8080/data/update/${id}`,
+            `https://localkart-pmni.onrender.com/data/update/${id}`,
             {status:newStatus}
         );
     }

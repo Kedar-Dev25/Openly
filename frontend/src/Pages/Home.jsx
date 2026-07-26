@@ -7,7 +7,7 @@ function Home() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/all-data")
+        axios.get("https://localkart-pmni.onrender.com/all-data")
             .then((response) => {
                 setShop(response.data);
             })
