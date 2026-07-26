@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,25 @@ import com.example.demo.repository.ShopRepository;
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class GetAllDataController {
+
     @Autowired
     ShopRepository repo;
 
     @GetMapping("/all-data")
     public List<Shop> getAllData() {
-        return repo.findAll();
+
+        // Get all shops from database
+        List<Shop> shops = repo.findAll();
+
+        // Check each shop
+        for (Shop shop : shops) {
+
+            if (!shop.getLastUpdated().equals(LocalDate.now())) {
+                shop.setStatus("NOT_UPDATED");
+            }
+
+        }
+        // Send modified list to frontend
+        return shops;
     }
-    
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "shops")
@@ -17,7 +18,7 @@ public class Shop {
     private String name;
     private String address;
     private String status;
-
+    private LocalDate lastUpdated;
     public Shop() {
     }
 
@@ -52,7 +53,14 @@ public class Shop {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+    public LocalDate getLastUpdated() {
+        return lastUpdated;
+    }
 
+    public void setLastUpdated(LocalDate lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
     @Override
 public String toString() {
     return "Shop{" +

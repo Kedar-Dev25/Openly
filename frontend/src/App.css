@@ -1,6 +1,185 @@
-.card{
-    border:1px solid #ddd;
-    border-radius:10px;
-    padding:20px;
-    margin:15px;
+body {
+    font-family: 'Inter', sans-serif;
+    background: #fafafa;
+    margin: 0;
+}
+
+
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 12px 10px 8px;
+}
+
+
+.hero h1 {
+    margin: 0 0 6px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+}
+
+
+.hero p {
+    margin: auto;
+    max-width: 320px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.4;
+}
+
+
+/* Highlight from home */
+.hero span {
+    font-weight: 700;
+    color: #111827;
+}
+
+
+/* Shop List */
+.shop-container {
+    max-width: 850px;
+    margin: auto;
+    padding: 8px;
+}
+
+
+/* Card */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 12px;
+    background: white;
+}
+
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: white;
+}
+
+
+.card h2 {
+    margin: 0 0 10px 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #111827;
+}
+
+
+.card p {
+    margin: 10px 0;
+    font-size: 13px;
+    color: #4b5563;
+}
+
+
+/* Status */
+.card p:last-child {
+    margin-top: 12px;
+    font-weight: 600;
+    color: #111827;
+}
+
+
+/* Mobile */
+@media(max-width:600px){
+
+    .hero {
+        padding: 10px 8px 5px;
+    }
+
+
+    .hero h1 {
+        font-size: 26px;
+    }
+
+
+    .hero p {
+        font-size: 13px;
+    }
+
+
+    .shop-container {
+        padding: 8px;
+    }
+
+
+    .card {
+        padding: 14px;
+        border-radius: 10px;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.owner-container {
+    max-width: 500px;
+    margin: auto;
+    padding: 15px;
+}
+
+
+.owner-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.owner-header h1 {
+    margin-bottom: 5px;
+    font-size: 28px;
+}
+
+
+.owner-header p {
+    color: #555;
+}
+
+
+.owner-card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    background: white;
+}
+
+
+.owner-card h2 {
+    margin-top: 0;
+}
+
+
+.owner-card p {
+    color: #555;
+}
+
+
+.owner-card h3 {
+    margin: 18px 0;
+}
+
+
+.owner-card button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    font-weight: 600;
 }
