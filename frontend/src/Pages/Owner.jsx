@@ -46,7 +46,7 @@ function Owner() {
         <div className="owner-container">
 
             <div className="owner-header">
-                <h1>LocalKart Owner</h1>
+                <h1>Openly Owner</h1>
                 <p>Update your shop status</p>
             </div>
 
