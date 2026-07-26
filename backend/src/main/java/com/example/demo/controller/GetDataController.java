@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.repository.ShopRepository;
 import com.example.demo.model.Shop;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://openlyhub.vercel.app/")
 @RestController
 public class GetDataController {
 
