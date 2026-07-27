@@ -8,23 +8,46 @@ function Owner() {
     const [shop,setShop] = useState(null);
     const [status,setStatus] = useState("OPEN");
     const {id} = useParams();
+    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
-        axios.get(`https://localkart-pmni.onrender.com/shops/${id}`)
-            .then((response) => {
-                setShop(response.data);
-                setStatus(response.data.status);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    axios.get(`https://localkart-pmni.onrender.com/shops/${id}`)
+        .then((response) => {
+            setShop(response.data);
+            setStatus(response.data.status);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            setLoading(false);
+        });
     }, [id]);
 
 
-    if (!shop) {
-        return <h2>Loading shop...</h2>;
-    }
+if (loading) {
+    return (
+        <div className="owner-container">
+            <div className="owner-header">
+                <div className="skeleton skeleton-title"></div>
+                <div className="skeleton skeleton-subtitle"></div>
+            </div>
+
+            <div className="owner-card">
+                <div className="skeleton skeleton-shop-name"></div>
+
+                <div className="skeleton skeleton-address"></div>
+
+                <div className="skeleton skeleton-status"></div>
+
+                <div className="skeleton skeleton-button"></div>
+
+                <div className="skeleton skeleton-button"></div>
+            </div>
+        </div>
+    );
+}
 
 
     const updateStatus = (newStatus) => {
