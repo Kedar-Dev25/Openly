@@ -44,7 +44,7 @@ function Home() {
     return (
         <>
     <div className="hero">
-    <h1>LocalKart</h1>
+    <h1>Openly</h1>
 
     <p>
         Save time. Check if the shop is open
