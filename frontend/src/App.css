@@ -1,131 +1,340 @@
+/* =========================
+   Base
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Inter', sans-serif;
-    background: #fafafa;
+    background: #f7f8fa;
     margin: 0;
-}
-
-
-/* Hero */
-.hero {
-    text-align: center;
-    padding: 12px 10px 8px;
-}
-
-
-.hero h1 {
-    margin: 0 0 6px;
-    font-size: 28px;
-    font-weight: 700;
     color: #111827;
 }
 
 
-.hero p {
-    margin: auto;
-    max-width: 320px;
-    font-size: 13px;
-    color: #555;
-    line-height: 1.4;
+/* =========================
+   Hero
+========================= */
+
+.hero {
+    text-align: center;
+    padding: 38px 16px 24px;
 }
 
+.hero h1 {
+    margin: 0 0 7px;
+    font-size: 32px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+    color: #111827;
+}
+
+.hero p {
+    margin: auto;
+    max-width: 360px;
+    font-size: 14px;
+    color: #667085;
+    line-height: 1.5;
+}
 
 /* Highlight from home */
+
 .hero span {
     font-weight: 700;
     color: #111827;
 }
 
 
-/* Shop List */
+/* =========================
+   Shop List
+========================= */
+
 .shop-container {
-    max-width: 850px;
+    width: 100%;
+    max-width: 760px;
     margin: auto;
-    padding: 8px;
+    padding: 0 14px 40px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 
-/* Card */
-.card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 12px;
-    background: white;
-}
-
+/* =========================
+   Shop Card
+========================= */
 
 .card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    width: 100%;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
     padding: 16px;
-    margin-bottom: 12px;
     background: white;
+    box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
 }
 
+
+/* =========================
+   Shop Information Layout
+========================= */
+
+.shop-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-width: 0;
+}
+
+.shop-info > div:first-child {
+    min-width: 0;
+    flex: 1;
+}
+
+
+/* =========================
+   Shop Text
+========================= */
 
 .card h2 {
-    margin: 0 0 10px 0;
+    margin: 0;
     font-size: 17px;
+    line-height: 1.35;
     font-weight: 700;
     color: #111827;
+    overflow-wrap: anywhere;
 }
-
 
 .card p {
-    margin: 10px 0;
+    margin: 5px 0 0;
     font-size: 13px;
-    color: #4b5563;
+    line-height: 1.4;
+    color: #667085;
 }
 
 
-/* Status */
-.card p:last-child {
-    margin-top: 12px;
-    font-weight: 600;
-    color: #111827;
+/* =========================
+   Status
+========================= */
+
+.shop-status {
+    margin-top: 12px !important;
+    font-size: 15px !important;
+    line-height: 1.4 !important;
+    font-weight: 800 !important;
+}
+
+.shop-status.open {
+    color: #3f8f5f;
+}
+
+.shop-status.closed {
+    color: #b85c5c;
+}
+
+.shop-status.not-updated {
+    color: #a8792f;
+}
+
+/* =========================
+   Last Checked
+========================= */
+
+.card p:nth-child(4) {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #98a2b3;
 }
 
 
-/* Mobile */
-@media(max-width:600px){
+/* =========================
+   Shop Image
+========================= */
+
+/* =========================
+   Shop Image
+========================= */
+
+.shop-image-section {
+    flex: 0 0 auto;
+    width: 100px;
+    text-align: center;
+}
+
+.shop-image-button {
+    width: 100px;
+    height: 82px;
+
+    display: block;
+    padding: 0;
+
+    border: 0;
+    background: transparent;
+
+    cursor: pointer;
+}
+
+.shop-image {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+    border-radius: 9px;
+    border: 1px solid #e4e7ec;
+}
+
+
+/* =========================
+   Image Slider
+   Ready for multiple images
+========================= */
+
+.shop-image-wrapper {
+    position: relative;
+}
+
+.image-arrow {
+    position: absolute;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 24px;
+    height: 24px;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.95);
+    color: #344054;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow: 0 1px 4px rgba(16, 24, 40, 0.18);
+}
+
+.image-arrow.left {
+    left: -8px;
+}
+
+.image-arrow.right {
+    right: -8px;
+}
+
+.image-counter {
+    position: absolute;
+
+    right: 5px;
+    bottom: 5px;
+
+    padding: 2px 5px;
+
+    border-radius: 5px;
+
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+
+    font-size: 9px;
+    line-height: 1;
+}
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 600px) {
 
     .hero {
-        padding: 10px 8px 5px;
+        padding: 32px 16px 24px;
     }
-
 
     .hero h1 {
-        font-size: 26px;
+        font-size: 30px;
     }
 
+    .hero p {
+        font-size: 14px;
+    }
+
+    .shop-container {
+        padding: 0 12px 35px;
+    }
+
+    .card {
+        padding: 15px;
+        border-radius: 13px;
+    }
+
+    .card h2 {
+        font-size: 16px;
+    }
+
+.shop-image-section {
+    width: 100px;
+}
+
+.shop-image-button {
+    width: 100px;
+    height: 82px;
+}
+}
+
+
+/* =========================
+   Small Mobile
+========================= */
+
+@media (max-width: 380px) {
+
+    .hero {
+        padding: 28px 14px 22px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
 
     .hero p {
         font-size: 13px;
     }
 
-
     .shop-container {
-        padding: 8px;
+        padding: 0 10px 30px;
     }
-
 
     .card {
         padding: 14px;
-        border-radius: 10px;
     }
 
+.shop-image-section {
+    width: 82px;
+}
+
+.shop-image-button {
+    width: 82px;
+    height: 68px;
+}
 }
 
 
-
-
-
-
-
-
-
-
-
+/* =========================
+   Owner Page
+========================= */
 
 .owner-container {
     max-width: 500px;
@@ -133,23 +342,19 @@ body {
     padding: 15px;
 }
 
-
 .owner-header {
     text-align: center;
     margin-bottom: 20px;
 }
-
 
 .owner-header h1 {
     margin-bottom: 5px;
     font-size: 28px;
 }
 
-
 .owner-header p {
     color: #555;
 }
-
 
 .owner-card {
     border: 1px solid #ddd;
@@ -158,89 +363,39 @@ body {
     background: white;
 }
 
-
 .owner-card h2 {
     margin-top: 0;
 }
-
 
 .owner-card p {
     color: #555;
 }
 
-
 .owner-card h3 {
     margin: 18px 0;
 }
-
 
 .owner-card button {
     width: 100%;
     padding: 12px;
     margin-top: 10px;
+
     border: 1px solid #ddd;
     border-radius: 8px;
+
     background: white;
+
     font-weight: 600;
 }
 
 
+/* =========================
+   Skeleton Loading
+========================= */
 
-/* Skeleton */
+.skeleton {
+    border-radius: 8px;
 
-.skeleton{
-    background:#e5e7eb;
-    border-radius:6px;
-    animation:pulse 1.3s infinite;
-}
-
-.skeleton.title{
-    width:180px;
-    height:20px;
-    margin-bottom:14px;
-}
-
-.skeleton.address{
-    width:230px;
-    height:14px;
-    margin-bottom:14px;
-}
-
-.skeleton.status{
-    width:110px;
-    height:14px;
-}
-
-@keyframes pulse{
-    0%{
-        opacity:1;
-    }
-
-    50%{
-        opacity:.45;
-    }
-
-    100%{
-        opacity:1;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.skeleton{
     background: linear-gradient(
         90deg,
         #ececec 25%,
@@ -249,51 +404,150 @@ body {
     );
 
     background-size: 200% 100%;
+
     animation: shimmer 1.2s infinite linear;
-    border-radius: 8px;
 }
 
-@keyframes shimmer{
-    from{
-        background-position:200% 0;
+
+/* Existing skeleton classes */
+
+.skeleton.title {
+    width: 180px;
+    height: 20px;
+    margin-bottom: 14px;
+}
+
+.skeleton.address {
+    width: 230px;
+    height: 14px;
+    margin-bottom: 14px;
+}
+
+.skeleton.status {
+    width: 110px;
+    height: 14px;
+}
+
+
+/* Additional skeleton classes */
+
+.skeleton-title {
+    width: 180px;
+    height: 32px;
+    margin: 0 auto 12px;
+}
+
+.skeleton-subtitle {
+    width: 150px;
+    height: 16px;
+    margin: 0 auto;
+}
+
+.skeleton-shop-name {
+    width: 220px;
+    height: 28px;
+    margin-bottom: 18px;
+}
+
+.skeleton-address {
+    width: 260px;
+    height: 16px;
+    margin-bottom: 25px;
+}
+
+.skeleton-status {
+    width: 100px;
+    height: 22px;
+    margin-bottom: 30px;
+}
+
+.skeleton-button {
+    width: 100%;
+    height: 46px;
+    margin-top: 15px;
+}
+
+
+/* =========================
+   Skeleton Animation
+========================= */
+
+@keyframes shimmer {
+    from {
+        background-position: 200% 0;
     }
-    to{
-        background-position:-200% 0;
+
+    to {
+        background-position: -200% 0;
     }
 }
 
-.skeleton-title{
-    width:180px;
-    height:32px;
-    margin:0 auto 12px;
+
+/* =========================
+   Shop Image + View Photos
+========================= */
+
+.shop-image-section {
+    flex: 0 0 auto;
+    width: 100px;
+    text-align: center;
 }
 
-.skeleton-subtitle{
-    width:150px;
-    height:16px;
-    margin:0 auto;
+.shop-image-button {
+    width: 100px;
+    height: 82px;
+
+    display: block;
+    padding: 0;
+
+    border: 0;
+    background: transparent;
+
+    cursor: pointer;
 }
 
-.skeleton-shop-name{
-    width:220px;
-    height:28px;
-    margin-bottom:18px;
+.shop-image {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+    border-radius: 9px;
+    border: 1px solid #e4e7ec;
 }
 
-.skeleton-address{
-    width:260px;
-    height:16px;
-    margin-bottom:25px;
+.see-shop-button {
+    margin-top: 5px;
+    padding: 3px 5px;
+
+    border: 0;
+    background: transparent;
+
+    color: #667085;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+
+    transition: color 0.15s ease;
 }
 
-.skeleton-status{
-    width:100px;
-    height:22px;
-    margin-bottom:30px;
+.see-shop-button span {
+    font-size: 13px;
+    transition: transform 0.15s ease;
 }
 
-.skeleton-button{
-    width:100%;
-    height:46px;
-    margin-top:15px;
+.see-shop-button:hover {
+    color: #344054;
 }
+
+.see-shop-button:hover span {
+    transform: translateX(2px);
+}
+

@@ -1,16 +1,18 @@
 [
   {
     "id": 1,
-    "name": "Xerox Shop 1",
+    "name": "L.N. BOOK STORE",
     "address": "Near UCPES",
-    "status": "OPEN",
-    "updatedAt": "2026-09-20T11:45:00+05:30"
+    "status": "O",
+    "updatedAt": "2026-09-21T11:45:00+05:30",
+    "images": ["/ln-book-store.png","/ln-book-store2.png"]
   },
   {
     "id": 2,
-    "name": "Xerox Shop 2",
+    "name": "L.N. BOOK STORE LEFT SIDE XEROX SHOP",
     "address": "Near UCPES",
-    "status": "CLOSE",
-    "updatedAt": "2026-09-19T11:40:00+05:30"
+    "status": "X",
+    "updatedAt": "2026-09-21T11:40:00+05:30",
+    "images": []
   }
 ]
