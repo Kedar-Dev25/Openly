@@ -20,7 +20,7 @@ body {
 
 .hero {
     text-align: center;
-    padding: 38px 16px 24px;
+    padding: 32px 16px 30px;
 }
 
 .hero h1 {
@@ -260,8 +260,8 @@ body {
 @media (max-width: 600px) {
 
     .hero {
-        padding: 32px 16px 24px;
-    }
+    padding: 28px 16px 30px;
+}
 
     .hero h1 {
         font-size: 30px;
@@ -301,9 +301,9 @@ body {
 
 @media (max-width: 380px) {
 
-    .hero {
-        padding: 28px 14px 22px;
-    }
+.hero {
+    padding: 26px 14px 28px;
+}
 
     .hero h1 {
         font-size: 28px;
@@ -551,3 +551,21 @@ body {
     transform: translateX(2px);
 }
 
+
+
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.brand h1 {
+    margin: 0;
+}
+
+.openly-logo {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}

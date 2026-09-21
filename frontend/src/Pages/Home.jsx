@@ -96,7 +96,14 @@ function closeImageViewer() {
         return (
             <>
                 <div className="hero">
-                    <h1>Openly</h1>
+                    <div className="brand">
+        <img
+            src="/openlylogo.png"
+            alt="Openly logo"
+            className="openly-logo"
+        />
+        <h1>Openly</h1>
+    </div>
 
                     <p>
                         Save time. Check if the shop is open
@@ -119,14 +126,21 @@ function closeImageViewer() {
 
     return (
         <>
-            <div className="hero">
-                <h1>Openly</h1>
+<div className="hero">
+    <div className="brand">
+        <img
+            src="/openlylogo.png"
+            alt="Openly logo"
+            className="openly-logo"
+        />
+        <h1>Openly</h1>
+    </div>
 
-                <p>
-                    Save time. Check if the shop is open
-                    <span> from home.</span>
-                </p>
-            </div>
+    <p>
+        Save time. Check if the shop is open
+        <span> from home.</span>
+    </p>
+</div>
 
             <div className="shop-container">
                 {shop.map((shop) => (
