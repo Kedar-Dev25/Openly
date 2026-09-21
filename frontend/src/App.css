@@ -569,3 +569,87 @@ body {
     height: 34px;
     object-fit: contain;
 }
+
+
+/* =========================
+   Full Image Viewer
+========================= */
+
+.image-viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    background: rgba(0, 0, 0, 0.92);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.viewer-image {
+    max-width: 92vw;
+    max-height: 82vh;
+
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.viewer-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+
+    width: 38px;
+    height: 38px;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+
+    font-size: 28px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.viewer-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 40px;
+    height: 40px;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+
+    font-size: 28px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.viewer-left {
+    left: 14px;
+}
+
+.viewer-right {
+    right: 14px;
+}
+
+.viewer-counter {
+    position: absolute;
+    bottom: 20px;
+
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+}
