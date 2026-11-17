@@ -867,3 +867,265 @@ body {
     stroke-linecap: round;
     stroke-linejoin: round;
 }
+
+
+
+/* =========================================
+   OPENLY — MODERN HOME PAGE OVERRIDE
+   ========================================= */
+
+/* Base */
+body {
+    background: #f5f8f6;
+    color: #172b25;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Hero / Brand */
+.hero {
+    padding: 42px 16px 34px;
+    text-align: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 13px;
+}
+
+.brand h1 {
+    color: #176b4d;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -1.3px;
+}
+
+.openly-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.hero p {
+    max-width: 380px;
+    margin: auto;
+    color: #718078;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Shop Container */
+.shop-container {
+    width: 100%;
+    max-width: 680px;
+    margin: auto;
+    padding: 0 16px 45px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Shop Cards */
+.card {
+    width: 100%;
+    padding: 19px;
+    background: #ffffff;
+    border: 1px solid #e5ece7;
+    border-radius: 18px;
+    box-shadow: 0 4px 14px rgba(23, 43, 37, 0.045);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card h2 {
+    color: #172b25;
+    font-size: 17px;
+    font-weight: 750;
+    letter-spacing: -0.35px;
+    line-height: 1.4;
+}
+
+.card p {
+    color: #78877f;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Shop Information */
+.shop-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+/* Availability Status */
+.shop-status {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    margin-top: 13px !important;
+    padding: 6px 11px;
+    border-radius: 8px;
+    font-size: 12px !important;
+    font-weight: 750 !important;
+    line-height: 1.4 !important;
+}
+
+.shop-status.open {
+    color: #16834a;
+    background: #e9f7ef;
+}
+
+.shop-status.closed {
+    color: #d14e49;
+    background: #fff0ef;
+}
+
+.shop-status.not-updated {
+    color: #a8792f;
+    background: #fff6e6;
+}
+
+/* Last Updated */
+.card p:nth-child(4) {
+    margin-top: 9px;
+    color: #98a59e;
+    font-size: 11px;
+}
+
+/* Shop Images */
+.shop-image-section {
+    flex: 0 0 auto;
+    width: 100px;
+    text-align: center;
+}
+
+.shop-image-button {
+    display: block;
+    width: 100px;
+    height: 82px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.shop-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 1px solid #e5ece7;
+    border-radius: 12px;
+}
+
+.see-shop-button {
+    margin-top: 6px;
+    color: #176b4d;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.see-shop-button:hover {
+    color: #104c36;
+}
+
+/* Image Slider */
+.image-arrow {
+    background: rgba(255, 255, 255, 0.96);
+    color: #176b4d;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.12);
+}
+
+/* Owner Access */
+.owner-access-link {
+    margin-top: 14px;
+    color: #84928a;
+    font-size: 12px;
+    font-weight: 650;
+    transition: color 0.2s ease;
+}
+
+.owner-access-link:hover {
+    color: #176b4d;
+}
+
+/* Owner Login Modal */
+.owner-modal {
+    border: 1px solid #e8eee9;
+    border-radius: 20px;
+}
+
+.owner-modal h2 {
+    color: #172b25;
+}
+
+.owner-login-button {
+    background: #176b4d;
+    border-radius: 11px;
+}
+
+.owner-login-button:hover {
+    background: #10583d;
+}
+
+.owner-modal form input:focus {
+    border-color: #176b4d;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+    .hero {
+        padding: 34px 16px 28px;
+    }
+
+    .brand h1 {
+        font-size: 33px;
+    }
+
+    .shop-container {
+        padding: 0 14px 35px;
+        gap: 14px;
+    }
+
+    .card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .card h2 {
+        font-size: 16px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 380px) {
+    .hero {
+        padding: 28px 14px;
+    }
+
+    .brand h1 {
+        font-size: 29px;
+    }
+
+    .shop-container {
+        padding: 0 11px 30px;
+    }
+
+    .card {
+        padding: 14px;
+    }
+
+    .shop-image-section,
+    .shop-image-button {
+        width: 82px;
+    }
+
+    .shop-image-button {
+        height: 68px;
+    }
+}

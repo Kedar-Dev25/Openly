@@ -11,15 +11,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.repository.ShopRepository;
-import com.example.demo.model.Shop;
+import com.example.demo.model.Owner;
+import com.example.demo.repository.OwnerRepository;
 
-@CrossOrigin(origins = "https://openlyhub.vercel.app")
+@CrossOrigin(origins = {
+    "http://localhost:5173",
+    "https://openlyhub.vercel.app"
+})
 @RestController
 public class OwnerLoginController {
 
     @Autowired
-    private ShopRepository shopRepo;
+    private OwnerRepository ownerRepo;
 
     @PostMapping("/owner/login")
     public ResponseEntity<Map<String, Boolean>> ownerLogin(
@@ -28,9 +31,11 @@ public class OwnerLoginController {
         Long shopId = Long.valueOf(request.get("shopId"));
         String password = request.get("password");
 
-        Shop shop = shopRepo.findById(shopId).orElse(null);
+        Owner owner = ownerRepo.findById(shopId).orElse(null);
 
-        if (shop == null || !password.equals(shop.getPassword())) {
+        if (owner == null ||
+                !password.equals(owner.getPassword())) {
+
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("valid", false));
