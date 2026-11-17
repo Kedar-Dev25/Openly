@@ -78,7 +78,7 @@ const isAuthorized = location.state?.authorized === true;
     className="owner-back-btn"
     onClick={() => navigate("/", { replace: true, state: null })}
 >
-    <span>←</span>
+    ←
 </button>
                 <div className="owner-header">
                     <div className="skeleton skeleton-title"></div>

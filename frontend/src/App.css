@@ -815,37 +815,40 @@ body {
 .owner-topbar {
     width: 100%;
     display: flex;
-    justify-content: flex-start;
-    margin: 0 auto 12px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 22px;
 }
 
 .owner-back-btn {
-    width: auto;
-    min-height: 40px;
-    padding: 8px 15px;
-    display: inline-flex;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
 
     background: #ffffff;
-    color: #334155;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
+    color: #1e293b;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 50%;
 
-    font-size: 14px;
-    font-weight: 600;
+    font-family: Arial, sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+
     cursor: pointer;
-
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    transition: all 0.2s ease;
-}
-
-.owner-back-btn span {
-    font-size: 18px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+    transition: 0.2s ease;
 }
 
 .owner-back-btn:hover {
-    background: #f1f5f9;
-    border-color: #cbd5e1;
+    background: #eaf0f8;
+    transform: scale(1.06);
+}
+
+.owner-back-btn:active {
+    transform: scale(0.94);
 }
