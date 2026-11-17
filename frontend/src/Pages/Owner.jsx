@@ -6,9 +6,25 @@ import "../App.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+function getTodayDate() {
+    const parts = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Kolkata",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+    }).formatToParts(new Date());
+
+    const date = {};
+
+    parts.forEach((part) => {
+        date[part.type] = part.value;
+    });
+
+    return `${date.year}-${date.month}-${date.day}`;
+}
+
 function Owner() {
     const [shop, setShop] = useState(null);
-    const [status, setStatus] = useState("OPEN");
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
 
@@ -16,15 +32,33 @@ function Owner() {
         axios.get(`${API_URL}/shops/${id}`)
             .then((response) => {
                 setShop(response.data);
-                setStatus(response.data.status);
             })
             .catch((error) => {
-                console.log(error);
+                console.error("Failed to load shop:", error);
             })
             .finally(() => {
                 setLoading(false);
             });
     }, [id]);
+
+    const updateStatus = async (newStatus) => {
+        if (!shop || displayedStatus === newStatus) {
+            return;
+        }
+
+        try {
+            const response = await axios.put(
+                `${API_URL}/data/update/${id}`,
+                { status: newStatus }
+            );
+
+            setShop(response.data);
+
+        } catch (error) {
+            console.error("Failed to update shop status:", error);
+            alert("Unable to update shop status. Please try again.");
+        }
+    };
 
     if (loading) {
         return (
@@ -45,31 +79,21 @@ function Owner() {
         );
     }
 
-  
-const updateStatus = async (newStatus) => {
-    if (status === newStatus) {
-        return;
-    }
-
-    try {
-        const response = await axios.put(
-            `${API_URL}/data/update/${id}`,
-            { status: newStatus }
-        );
-
-        setShop(response.data);
-        setStatus(response.data.status);
-
-    } catch (error) {
-        console.error("Failed to update shop status:", error);
-        alert("Unable to update shop status. Please try again.");
-    }
-};
-
-
     if (!shop) {
-        return <div className="owner-container">Unable to load shop information.</div>;
+        return (
+            <div className="owner-container">
+                Unable to load shop information.
+            </div>
+        );
     }
+
+    // Compare the database date with today's Indian date.
+    const isUpdatedToday = shop.lastUpdated === getTodayDate();
+
+    // Show actual status only if the shop was updated today.
+    const displayedStatus = isUpdatedToday
+        ? shop.status
+        : "NOT_UPDATED";
 
     return (
         <div className="owner-container">
@@ -84,15 +108,21 @@ const updateStatus = async (newStatus) => {
                 <p>{shop.address}</p>
 
                 <h3>
-                    {status === "OPEN" && "🟢 OPEN"}
-                    {status === "CLOSE" && "🔴 CLOSED"}
+                    {displayedStatus === "OPEN" && "🟢 OPEN"}
+                    {displayedStatus === "CLOSE" && "🔴 CLOSED"}
+                    {displayedStatus === "NOT_UPDATED" &&
+                        "🟡 Status Not Updated Today"}
                 </h3>
 
-                <button onClick={() => updateStatus("OPEN")}>
+                <button
+                    onClick={() => updateStatus("OPEN")}
+                >
                     Open Shop
                 </button>
 
-                <button onClick={() => updateStatus("CLOSE")}>
+                <button
+                    onClick={() => updateStatus("CLOSE")}
+                >
                     Close Shop
                 </button>
             </div>
