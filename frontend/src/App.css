@@ -812,31 +812,49 @@ body {
 }
 
 
-.owner-topbar {
+.owner-heading-row {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    align-items: start;
     width: 100%;
+    margin-bottom: 20px;
+}
+
+.owner-topbar {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 18px;
+    margin: 0;
+}
+
+.owner-header {
+    text-align: center;
+    margin: 0;
+}
+
+.owner-header h1 {
+    margin: 0 0 5px;
+    font-size: 28px;
+}
+
+.owner-header p {
+    margin: 0;
+}
+
+.owner-heading-spacer {
+    width: 44px;
 }
 
 .owner-back-btn {
     width: 44px;
     height: 44px;
-    min-width: 44px;
     padding: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background: #ffffff;
+    background: white;
     border: 1px solid #e2e8f0;
     border-radius: 50%;
-
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-    transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .owner-back-btn svg {
@@ -848,12 +866,4 @@ body {
     stroke-width: 2.2;
     stroke-linecap: round;
     stroke-linejoin: round;
-}
-
-.owner-back-btn:hover {
-    background: #f1f5f9;
-}
-
-.owner-back-btn:active {
-    transform: scale(0.94);
 }

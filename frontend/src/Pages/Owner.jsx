@@ -74,16 +74,28 @@ const isAuthorized = location.state?.authorized === true;
         return (
             
             <div className="owner-container">
-<button
-    className="owner-back-btn"
-    onClick={() => navigate("/", { replace: true, state: null })}
->
-    ←
-</button>
-                <div className="owner-header">
-                    <div className="skeleton skeleton-title"></div>
-                    <div className="skeleton skeleton-subtitle"></div>
-                </div>
+<div className="owner-heading-row">
+
+    <div className="owner-topbar">
+        <button
+            className="owner-back-btn"
+            onClick={() => navigate("/", { replace: true, state: null })}
+            aria-label="Go back"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M19 12H5 M12 19L5 12L12 5" />
+            </svg>
+        </button>
+    </div>
+
+    <div className="owner-header">
+        <div className="skeleton skeleton-title"></div>
+        <div className="skeleton skeleton-subtitle"></div>
+    </div>
+
+    <div className="owner-heading-spacer"></div>
+
+</div>
 
                 <div className="owner-card">
                     <div className="skeleton skeleton-shop-name"></div>
@@ -115,25 +127,28 @@ const isAuthorized = location.state?.authorized === true;
 return (
     <div className="owner-container">
 
-        <div className="owner-topbar">
-    <button
-        className="owner-back-btn"
-        onClick={() => navigate("/", { replace: true, state: null })}
-        aria-label="Go back"
-    >
-        <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-        >
-            <path d="M19 12H5 M12 19L5 12L12 5" />
-        </svg>
-    </button>
-</div>
+<div className="owner-heading-row">
 
-        <div className="owner-header">
-            <h1>Openly Owner</h1>
-            <p>Update your shop status</p>
-        </div>
+    <div className="owner-topbar">
+        <button
+            className="owner-back-btn"
+            onClick={() => navigate("/", { replace: true, state: null })}
+            aria-label="Go back"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M19 12H5 M12 19L5 12L12 5" />
+            </svg>
+        </button>
+    </div>
+
+    <div className="owner-header">
+        <h1>Openly Owner</h1>
+        <p>Update your shop status</p>
+    </div>
+
+    <div className="owner-heading-spacer"></div>
+
+</div>
 
         <div className="owner-card">
             <h2>{shop.name}</h2>
