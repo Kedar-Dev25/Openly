@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../App.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -27,7 +28,7 @@ function Owner() {
     const [shop, setShop] = useState(null);
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
-
+    const navigate = useNavigate();
     useEffect(() => {
         axios.get(`${API_URL}/shops/${id}`)
             .then((response) => {
@@ -62,7 +63,14 @@ function Owner() {
 
     if (loading) {
         return (
+            
             <div className="owner-container">
+                <button
+    className="owner-back-btn"
+    onClick={() => navigate("/")}
+>
+    <span>←</span> Back to Openly
+</button>
                 <div className="owner-header">
                     <div className="skeleton skeleton-title"></div>
                     <div className="skeleton skeleton-subtitle"></div>
