@@ -1,9 +1,8 @@
 
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "../App.css";
-import { useNavigate, useParams } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -103,9 +102,17 @@ function Owner() {
         ? shop.status
         : "NOT_UPDATED";
 
-    return (
-        <div className="owner-container">
-            <div className="owner-header">
+return (
+    <div className="owner-container">
+
+        <button
+            className="owner-back-btn"
+            onClick={() => navigate("/")}
+        >
+            <span>←</span> Back to Openly
+        </button>
+
+        <div className="owner-header">
                 <h1>Openly Owner</h1>
                 <p>Update your shop status</p>
             </div>
