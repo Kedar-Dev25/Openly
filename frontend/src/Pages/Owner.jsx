@@ -116,13 +116,19 @@ return (
     <div className="owner-container">
 
         <div className="owner-topbar">
-            <button
-                className="owner-back-btn"
-                onClick={() => navigate("/")}
-            >
-                <span>←</span>
-            </button>
-        </div>
+    <button
+        className="owner-back-btn"
+        onClick={() => navigate("/", { replace: true, state: null })}
+        aria-label="Go back"
+    >
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <path d="M19 12H5 M12 19L5 12L12 5" />
+        </svg>
+    </button>
+</div>
 
         <div className="owner-header">
             <h1>Openly Owner</h1>

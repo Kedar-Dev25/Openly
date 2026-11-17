@@ -815,14 +815,15 @@ body {
 .owner-topbar {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    margin-bottom: 22px;
+    margin-bottom: 18px;
 }
 
 .owner-back-btn {
-    width: 50px;
-    height: 50px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
     padding: 0;
 
     display: flex;
@@ -830,23 +831,27 @@ body {
     justify-content: center;
 
     background: #ffffff;
-    color: #1e293b;
-    border: 1.5px solid #cbd5e1;
+    border: 1px solid #e2e8f0;
     border-radius: 50%;
 
-    font-family: Arial, sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 1;
-
     cursor: pointer;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
-    transition: 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.owner-back-btn svg {
+    width: 23px;
+    height: 23px;
+    display: block;
+    fill: none;
+    stroke: #1e293b;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .owner-back-btn:hover {
-    background: #eaf0f8;
-    transform: scale(1.06);
+    background: #f1f5f9;
 }
 
 .owner-back-btn:active {
