@@ -1,31 +1,24 @@
+
 import { useEffect, useState } from "react";
 import "../App.css";
+
+const API_URL = "https://localkart-pmni.onrender.com";
 
 function Home() {
     const [shop, setShop] = useState([]);
     const [loading, setLoading] = useState(true);
     const [imageIndexes, setImageIndexes] = useState({});
     const [imageViewer, setImageViewer] = useState(null);
-    function isUpdatedToday(timestamp) {
-        const updatedDate = new Date(timestamp);
-        const today = new Date();
-
-        return (
-            updatedDate.getDate() === today.getDate() &&
-            updatedDate.getMonth() === today.getMonth() &&
-            updatedDate.getFullYear() === today.getFullYear()
-        );
-    }
 
     function getTimeAgo(timestamp) {
+        if (!timestamp) return "unknown";
+
         const updatedTime = new Date(timestamp);
         const now = new Date();
 
         const difference = Math.floor((now - updatedTime) / 1000);
 
-        if (difference < 60) {
-            return "just now";
-        }
+        if (difference < 60) return "just now";
 
         const minutes = Math.floor(difference / 60);
 
@@ -41,51 +34,61 @@ function Home() {
 
         const days = Math.floor(hours / 24);
 
-        if (days === 1) {
-            return "yesterday";
-        }
+        if (days === 1) return "yesterday";
 
         return `${days} days ago`;
     }
+
     function changeImage(shopId, direction, totalImages) {
-    setImageIndexes((previous) => {
-        const currentIndex = previous[shopId] || 0;
+        setImageIndexes((previous) => {
+            const currentIndex = previous[shopId] || 0;
 
-        let nextIndex;
+            let nextIndex;
 
-        if (direction === "next") {
-            nextIndex =
-                currentIndex === totalImages - 1
-                    ? 0
-                    : currentIndex + 1;
-        } else {
-            nextIndex =
-                currentIndex === 0
-                    ? totalImages - 1
-                    : currentIndex - 1;
-        }
+            if (direction === "next") {
+                nextIndex =
+                    currentIndex === totalImages - 1
+                        ? 0
+                        : currentIndex + 1;
+            } else {
+                nextIndex =
+                    currentIndex === 0
+                        ? totalImages - 1
+                        : currentIndex - 1;
+            }
 
-        return {
-            ...previous,
-            [shopId]: nextIndex,
-        };
-    });
-}
-function openImageViewer(shopId) {
-    setImageViewer({
-        shopId,
-        index: imageIndexes[shopId] || 0,
-    });
-}
+            return {
+                ...previous,
+                [shopId]: nextIndex,
+            };
+        });
+    }
 
-function closeImageViewer() {
-    setImageViewer(null);
-}
+    function openImageViewer(shopId) {
+        setImageViewer({
+            shopId,
+            index: imageIndexes[shopId] || 0,
+        });
+    }
+
+    function closeImageViewer() {
+        setImageViewer(null);
+    }
+
     useEffect(() => {
-        fetch("/shops.json")
-            .then((response) => response.json())
+        fetch(`${API_URL}/all-data`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to fetch shops");
+                }
+
+                return response.json();
+            })
             .then((data) => {
                 setShop(data);
+            })
+            .catch((error) => {
+                console.error("Error fetching shops:", error);
             })
             .finally(() => {
                 setLoading(false);
@@ -97,13 +100,13 @@ function closeImageViewer() {
             <>
                 <div className="hero">
                     <div className="brand">
-        <img
-            src="/openlylogo.png"
-            alt="Openly logo"
-            className="openly-logo"
-        />
-        <h1>Openly</h1>
-    </div>
+                        <img
+                            src="/openlylogo.png"
+                            alt="Openly logo"
+                            className="openly-logo"
+                        />
+                        <h1>Openly</h1>
+                    </div>
 
                     <p>
                         Save time. Check if the shop is open
@@ -126,26 +129,25 @@ function closeImageViewer() {
 
     return (
         <>
-<div className="hero">
-    <div className="brand">
-        <img
-            src="/openlylogo.png"
-            alt="Openly logo"
-            className="openly-logo"
-        />
-        <h1>Openly</h1>
-    </div>
+            <div className="hero">
+                <div className="brand">
+                    <img
+                        src="/openlylogo.png"
+                        alt="Openly logo"
+                        className="openly-logo"
+                    />
+                    <h1>Openly</h1>
+                </div>
 
-    <p>
-        Save time. Check if the shop is open
-        <span> from home.</span>
-    </p>
-</div>
+                <p>
+                    Save time. Check if the shop is open
+                    <span> from home.</span>
+                </p>
+            </div>
 
             <div className="shop-container">
                 {shop.map((shop) => (
                     <div key={shop.id} className="card">
-
                         <div className="shop-info">
                             <div>
                                 <h2>{shop.name}</h2>
@@ -154,138 +156,151 @@ function closeImageViewer() {
 
                                 <p
                                     className={
-                                        isUpdatedToday(shop.updatedAt)
-                                            ? shop.status === "O"
-                                                ? "shop-status open"
-                                                : "shop-status closed"
+                                        shop.status === "OPEN"
+                                            ? "shop-status open"
+                                            : shop.status === "CLOSE"
+                                            ? "shop-status closed"
                                             : "shop-status not-updated"
                                     }
                                 >
-                                    {isUpdatedToday(shop.updatedAt) ? (
-                                        <>
-                                            {shop.status === "O" && "🟢 OPEN NOW"}
-                                            {shop.status === "X" && "🔴 CLOSED"}
-                                        </>
-                                    ) : (
-                                        "🟡 Status Not Updated Today"
-                                    )}
+                                    {shop.status === "OPEN" && "🟢 OPEN NOW"}
+                                    {shop.status === "CLOSE" && "🔴 CLOSED"}
+                                    {shop.status === "NOT_UPDATED" &&
+                                        "🟡 Status Not Updated Today"}
                                 </p>
 
                                 <p>
-                                    Last checked {getTimeAgo(shop.updatedAt)}
+                                    Last checked {getTimeAgo(shop.lastUpdated)}
                                 </p>
                             </div>
 
-                       {shop.images?.length > 0 && (
-    <div className="shop-image-section">
+                            {shop.images?.length > 0 && (
+                                <div className="shop-image-section">
+                                    <div className="shop-image-wrapper">
+                                        <button
+                                            className="shop-image-button"
+                                            onClick={() =>
+                                                openImageViewer(shop.id)
+                                            }
+                                            aria-label={`View photos of ${shop.name}`}
+                                        >
+                                            <img
+                                                src={
+                                                    shop.images[
+                                                        imageIndexes[shop.id] || 0
+                                                    ]
+                                                }
+                                                alt={shop.name}
+                                                className="shop-image"
+                                            />
+                                        </button>
+                                    </div>
 
-        <div className="shop-image-wrapper">
-            <button
-                className="shop-image-button"
-                onClick={() => openImageViewer(shop.id)}
-                aria-label={`View photos of ${shop.name}`}
-            >
-                <img
-                    src={shop.images[imageIndexes[shop.id] || 0]}
-                    alt={shop.name}
-                    className="shop-image"
-                />
-            </button>
-        </div>
-
-<button
-    className="see-shop-button"
-    onClick={() => openImageViewer(shop.id)}
->
-    View shop photos
-    <span>→</span>
-</button>
-
-    </div>
-)}
+                                    <button
+                                        className="see-shop-button"
+                                        onClick={() =>
+                                            openImageViewer(shop.id)
+                                        }
+                                    >
+                                        View shop photos
+                                        <span>→</span>
+                                    </button>
+                                </div>
+                            )}
                         </div>
-
                     </div>
                 ))}
             </div>
+
             {imageViewer && (
-    <div className="image-viewer">
+                <div className="image-viewer">
+                    <button
+                        className="viewer-close"
+                        onClick={closeImageViewer}
+                        aria-label="Close image viewer"
+                    >
+                        ×
+                    </button>
 
-        <button
-            className="viewer-close"
-            onClick={closeImageViewer}
-            aria-label="Close image viewer"
-        >
-            ×
-        </button>
+                    <img
+                        src={
+                            shop.find(
+                                (item) => item.id === imageViewer.shopId
+                            )?.images?.[imageViewer.index]
+                        }
+                        alt={
+                            shop.find(
+                                (item) => item.id === imageViewer.shopId
+                            )?.name
+                        }
+                        className="viewer-image"
+                    />
 
-        <img
-            src={
-                shop.find((item) => item.id === imageViewer.shopId)
-                    ?.images[imageViewer.index]
-            }
-            alt={
-                shop.find((item) => item.id === imageViewer.shopId)?.name
-            }
-            className="viewer-image"
-        />
+                    {shop.find(
+                        (item) => item.id === imageViewer.shopId
+                    )?.images?.length > 1 && (
+                        <>
+                            <button
+                                className="viewer-arrow viewer-left"
+                                onClick={() => {
+                                    const selectedShop = shop.find(
+                                        (item) =>
+                                            item.id === imageViewer.shopId
+                                    );
 
-        {shop.find((item) => item.id === imageViewer.shopId)?.images.length > 1 && (
-            <>
-                <button
-                    className="viewer-arrow viewer-left"
-                    onClick={() => {
-                        const selectedShop = shop.find(
-                            (item) => item.id === imageViewer.shopId
-                        );
+                                    const totalImages =
+                                        selectedShop.images.length;
 
-                        const totalImages = selectedShop.images.length;
+                                    setImageViewer((previous) => ({
+                                        ...previous,
+                                        index:
+                                            previous.index === 0
+                                                ? totalImages - 1
+                                                : previous.index - 1,
+                                    }));
+                                }}
+                                aria-label="Previous image"
+                            >
+                                ‹
+                            </button>
 
-                        setImageViewer((previous) => ({
-                            ...previous,
-                            index:
-                                previous.index === 0
-                                    ? totalImages - 1
-                                    : previous.index - 1,
-                        }));
-                    }}
-                    aria-label="Previous image"
-                >
-                    ‹
-                </button>
+                            <button
+                                className="viewer-arrow viewer-right"
+                                onClick={() => {
+                                    const selectedShop = shop.find(
+                                        (item) =>
+                                            item.id === imageViewer.shopId
+                                    );
 
-                <button
-                    className="viewer-arrow viewer-right"
-                    onClick={() => {
-                        const selectedShop = shop.find(
-                            (item) => item.id === imageViewer.shopId
-                        );
+                                    const totalImages =
+                                        selectedShop.images.length;
 
-                        const totalImages = selectedShop.images.length;
+                                    setImageViewer((previous) => ({
+                                        ...previous,
+                                        index:
+                                            previous.index === totalImages - 1
+                                                ? 0
+                                                : previous.index + 1,
+                                    }));
+                                }}
+                                aria-label="Next image"
+                            >
+                                ›
+                            </button>
 
-                        setImageViewer((previous) => ({
-                            ...previous,
-                            index:
-                                previous.index === totalImages - 1
-                                    ? 0
-                                    : previous.index + 1,
-                        }));
-                    }}
-                    aria-label="Next image"
-                >
-                    ›
-                </button>
-
-                <div className="viewer-counter">
-                    {imageViewer.index + 1} /{" "}
-                    {shop.find((item) => item.id === imageViewer.shopId)
-                        ?.images.length}
+                            <div className="viewer-counter">
+                                {imageViewer.index + 1} /{" "}
+                                {
+                                    shop.find(
+                                        (item) =>
+                                            item.id === imageViewer.shopId
+                                    )?.images.length
+                                }
+                            </div>
+                        </>
+                    )}
                 </div>
-            </>
-        )}
-
-    </div>
-)}
+            )}
         </>
     );
 }
