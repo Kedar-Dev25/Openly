@@ -653,3 +653,160 @@ body {
     font-size: 13px;
     font-weight: 600;
 }
+
+/* Subtle owner access link */
+
+.owner-access-link {
+    display: block;
+    margin-top: 14px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #999;
+    font-size: 12px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.owner-access-link:hover {
+    color: #333;
+}
+
+/* Modal background */
+
+.owner-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Modal */
+
+.owner-modal {
+    position: relative;
+    background: white;
+    width: 100%;
+    max-width: 390px;
+    padding: 30px 25px;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+    animation: ownerModalAppear 0.2s ease;
+}
+
+@keyframes ownerModalAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.owner-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    border: none;
+    background: transparent;
+    font-size: 27px;
+    color: #777;
+    cursor: pointer;
+}
+
+.owner-lock-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.owner-modal h2 {
+    margin: 0 0 8px;
+    font-size: 23px;
+    color: #222;
+}
+
+.owner-modal-description {
+    color: #777;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.owner-selected-shop {
+    background: #f5f7f9;
+    padding: 13px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.owner-selected-shop strong {
+    font-size: 14px;
+}
+
+.owner-selected-shop span {
+    font-size: 12px;
+    color: #777;
+}
+
+.owner-modal form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.owner-modal form input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+
+.owner-modal form input:focus {
+    border-color: #333;
+}
+
+.owner-login-error {
+    color: #dc3545;
+    font-size: 13px;
+    margin: 9px 0 0;
+}
+
+.owner-login-button {
+    width: 100%;
+    margin-top: 17px;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: #222;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.owner-login-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.owner-modal-footer {
+    text-align: center;
+    color: #999;
+    font-size: 11px;
+    margin: 18px 0 0;
+}
