@@ -45,18 +45,27 @@ function Owner() {
         );
     }
 
-    const updateStatus = (newStatus) => {
-        if (status === newStatus) {
-            return;
-        }
+  
+const updateStatus = async (newStatus) => {
+    if (status === newStatus) {
+        return;
+    }
 
-        setStatus(newStatus);
-
-        axios.put(
+    try {
+        const response = await axios.put(
             `${API_URL}/data/update/${id}`,
             { status: newStatus }
         );
-    };
+
+        setShop(response.data);
+        setStatus(response.data.status);
+
+    } catch (error) {
+        console.error("Failed to update shop status:", error);
+        alert("Unable to update shop status. Please try again.");
+    }
+};
+
 
     if (!shop) {
         return <div className="owner-container">Unable to load shop information.</div>;

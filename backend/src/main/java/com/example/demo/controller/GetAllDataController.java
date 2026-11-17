@@ -1,6 +1,8 @@
+
 package com.example.demo.controller;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +23,24 @@ public class GetAllDataController {
     @GetMapping("/all-data")
     public List<Shop> getAllData() {
 
+        // Get today's date according to Indian time
+        LocalDate today = LocalDate.now(
+            ZoneId.of("Asia/Kolkata")
+        );
+
         // Get all shops from database
         List<Shop> shops = repo.findAll();
 
-        // Check each shop
+        // Check each shop's last updated date
         for (Shop shop : shops) {
 
-            if (!shop.getLastUpdated().equals(LocalDate.now())) {
+            if (shop.getLastUpdated() == null ||
+                !shop.getLastUpdated().equals(today)) {
+
                 shop.setStatus("NOT_UPDATED");
             }
-
         }
+
         // Send modified list to frontend
         return shops;
     }

@@ -10,33 +10,17 @@ function Home() {
     const [imageIndexes, setImageIndexes] = useState({});
     const [imageViewer, setImageViewer] = useState(null);
 
-    function getTimeAgo(timestamp) {
-        if (!timestamp) return "unknown";
+    function getLastUpdated(date) {
+        if (!date) return "Unknown";
 
-        const updatedTime = new Date(timestamp);
-        const now = new Date();
-
-        const difference = Math.floor((now - updatedTime) / 1000);
-
-        if (difference < 60) return "just now";
-
-        const minutes = Math.floor(difference / 60);
-
-        if (minutes < 60) {
-            return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
-        }
-
-        const hours = Math.floor(minutes / 60);
-
-        if (hours < 24) {
-            return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
-        }
-
-        const days = Math.floor(hours / 24);
-
-        if (days === 1) return "yesterday";
-
-        return `${days} days ago`;
+        return new Date(`${date}T00:00:00`).toLocaleDateString(
+            "en-IN",
+            {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+            }
+        );
     }
 
     function changeImage(shopId, direction, totalImages) {
@@ -76,7 +60,9 @@ function Home() {
     }
 
     useEffect(() => {
-        fetch(`${API_URL}/all-data`)
+        fetch(`${API_URL}/all-data`, {
+            cache: "no-store",
+        })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Failed to fetch shops");
@@ -170,7 +156,7 @@ function Home() {
                                 </p>
 
                                 <p>
-                                    Last checked {getTimeAgo(shop.lastUpdated)}
+                                    Last updated: {getLastUpdated(shop.lastUpdated)}
                                 </p>
                             </div>
 
