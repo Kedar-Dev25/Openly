@@ -59,7 +59,9 @@ async function handleOwnerLogin(e) {
             return;
         }
 
-        navigate(`/owner/${selectedShop.id}`);
+navigate(`/owner/${selectedShop.id}`, {
+    state: { authorized: true }
+});
     } catch (error) {
         console.error("Owner login error:", error);
         setLoginError("Unable to verify PIN. Please try again.");

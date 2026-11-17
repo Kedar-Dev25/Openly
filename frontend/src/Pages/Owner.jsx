@@ -1,6 +1,11 @@
 
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+    useNavigate,
+    useParams,
+    useLocation,
+    Navigate
+} from "react-router-dom";
 import axios from "axios";
 import "../App.css";
 
@@ -26,6 +31,9 @@ function getTodayDate() {
 function Owner() {
     const [shop, setShop] = useState(null);
     const { id } = useParams();
+    const location = useLocation();
+
+const isAuthorized = location.state?.authorized === true;
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     useEffect(() => {
@@ -59,16 +67,18 @@ function Owner() {
             alert("Unable to update shop status. Please try again.");
         }
     };
-
+    if (!isAuthorized) {
+    return <Navigate to="/" replace />;
+}
     if (loading) {
         return (
             
             <div className="owner-container">
-                <button
+<button
     className="owner-back-btn"
-    onClick={() => navigate("/")}
+    onClick={() => navigate("/", { replace: true, state: null })}
 >
-    <span>←</span> Back to Openly
+    <span>←</span>
 </button>
                 <div className="owner-header">
                     <div className="skeleton skeleton-title"></div>
@@ -105,44 +115,42 @@ function Owner() {
 return (
     <div className="owner-container">
 
-        <button
-            className="owner-back-btn"
-            onClick={() => navigate("/")}
-        >
-            <span>←</span> Back to Openly
-        </button>
+        <div className="owner-topbar">
+            <button
+                className="owner-back-btn"
+                onClick={() => navigate("/")}
+            >
+                <span>←</span>
+            </button>
+        </div>
 
         <div className="owner-header">
-                <h1>Openly Owner</h1>
-                <p>Update your shop status</p>
-            </div>
-
-            <div className="owner-card">
-                <h2>{shop.name}</h2>
-
-                <p>{shop.address}</p>
-
-                <h3>
-                    {displayedStatus === "OPEN" && "🟢 OPEN"}
-                    {displayedStatus === "CLOSE" && "🔴 CLOSED"}
-                    {displayedStatus === "NOT_UPDATED" &&
-                        "🟡 Status Not Updated Today"}
-                </h3>
-
-                <button
-                    onClick={() => updateStatus("OPEN")}
-                >
-                    Open Shop
-                </button>
-
-                <button
-                    onClick={() => updateStatus("CLOSE")}
-                >
-                    Close Shop
-                </button>
-            </div>
+            <h1>Openly Owner</h1>
+            <p>Update your shop status</p>
         </div>
-    );
+
+        <div className="owner-card">
+            <h2>{shop.name}</h2>
+
+            <p>{shop.address}</p>
+
+            <h3>
+                {displayedStatus === "OPEN" && "🟢 OPEN"}
+                {displayedStatus === "CLOSE" && "🔴 CLOSED"}
+                {displayedStatus === "NOT_UPDATED" &&
+                    "🟡 Status Not Updated Today"}
+            </h3>
+
+            <button onClick={() => updateStatus("OPEN")}>
+                Open Shop
+            </button>
+
+            <button onClick={() => updateStatus("CLOSE")}>
+                Close Shop
+            </button>
+        </div>
+    </div>
+);
 }
 
 export default Owner;

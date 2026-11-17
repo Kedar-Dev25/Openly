@@ -812,34 +812,40 @@ body {
 }
 
 
+.owner-topbar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin: 0 auto 12px;
+}
+
 .owner-back-btn {
+    width: auto;
+    min-height: 40px;
+    padding: 8px 15px;
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    padding: 10px 18px;
-    margin-bottom: 24px;
-    border: 1px solid #e8eaf0;
-    border-radius: 30px;
+    justify-content: center;
+    gap: 8px;
+
     background: #ffffff;
-    color: #475569;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.25s ease;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
 }
 
 .owner-back-btn span {
-    font-size: 19px;
-    transition: transform 0.25s ease;
+    font-size: 18px;
 }
 
 .owner-back-btn:hover {
-    background: #f8fafc;
+    background: #f1f5f9;
     border-color: #cbd5e1;
-    transform: translateY(-2px);
-}
-
-.owner-back-btn:hover span {
-    transform: translateX(-3px);
 }
