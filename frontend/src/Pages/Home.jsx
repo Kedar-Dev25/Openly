@@ -1,5 +1,4 @@
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 
@@ -16,6 +15,19 @@ const [selectedShop, setSelectedShop] = useState(null);
 const [ownerPassword, setOwnerPassword] = useState("");
 const [loginError, setLoginError] = useState("");
 const [verifying, setVerifying] = useState(false);
+const [showRegister, setShowRegister] = useState(false);
+const [registerForm, setRegisterForm] = useState({
+    name: "",
+    address: "",
+    status: "",
+    password: "",
+});
+const [refreshShops, setRefreshShops] = useState(0);
+const [highlightShopId, setHighlightShopId] = useState(null);
+
+const newlyRegisteredShop = useRef(null);
+const [registerError, setRegisterError] = useState("");
+const [registering, setRegistering] = useState(false);
 
 function openOwnerLogin(selected) {
     setSelectedShop(selected);
@@ -28,7 +40,59 @@ function closeOwnerLogin() {
     setOwnerPassword("");
     setLoginError("");
 }
+async function handleShopRegistration(e) {
+    e.preventDefault();
 
+    if (!/^\d{5}$/.test(registerForm.password)) {
+        setRegisterError("PIN must contain exactly 5 digits.");
+        return;
+    }
+
+    try {
+        setRegistering(true);
+        setRegisterError("");
+
+        const response = await fetch(`${API_URL}/shops/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(registerForm),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            setRegisterError(data.message || "Registration failed.");
+            return;
+        }
+
+        alert("Shop registered successfully!");
+
+newlyRegisteredShop.current = {
+    name: registerForm.name.trim(),
+    address: registerForm.address.trim(),
+};
+
+setShowRegister(false);
+
+setRegisterForm({
+    name: "",
+    address: "",
+    status: "",
+    password: "",
+});
+
+setLoading(true);
+setRefreshShops((previous) => previous + 1);
+
+    } catch (error) {
+        console.error("Shop registration error:", error);
+        setRegisterError("Unable to register your shop. Please try again.");
+    } finally {
+        setRegistering(false);
+    }
+}
 async function handleOwnerLogin(e) {
     e.preventDefault();
 
@@ -119,27 +183,68 @@ navigate(`/owner/${selectedShop.id}`, {
     }
 
     useEffect(() => {
-        fetch(`${API_URL}/all-data`, {
-            cache: "no-store",
+    fetch(`${API_URL}/all-data`, {
+        cache: "no-store",
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Failed to fetch shops");
+            }
+
+            return response.json();
         })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to fetch shops");
+        .then((data) => {
+            setShop(data);
+
+            const registered = newlyRegisteredShop.current;
+
+            if (registered) {
+                const newShop = data.find(
+                    (item) =>
+                        item.name.trim().toLowerCase() ===
+                            registered.name.toLowerCase() &&
+                        item.address.trim().toLowerCase() ===
+                            registered.address.toLowerCase()
+                );
+
+                if (newShop) {
+                    setHighlightShopId(newShop.id);
+                    newlyRegisteredShop.current = null;
                 }
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching shops:", error);
+        })
+        .finally(() => {
+            setLoading(false);
+        });
+}, [refreshShops]);
+useEffect(() => {
+    if (highlightShopId === null) return;
 
-                return response.json();
-            })
-            .then((data) => {
-                setShop(data);
-            })
-            .catch((error) => {
-                console.error("Error fetching shops:", error);
-            })
-            .finally(() => {
-                setLoading(false);
+    const timer = setTimeout(() => {
+        const card = document.getElementById(
+            `shop-card-${highlightShopId}`
+        );
+
+        if (card) {
+            card.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
             });
-    }, []);
+        }
+    }, 200);
 
+    const removeHighlight = setTimeout(() => {
+        setHighlightShopId(null);
+    }, 3500);
+
+    return () => {
+        clearTimeout(timer);
+        clearTimeout(removeHighlight);
+    };
+}, [highlightShopId]);
     if (loading) {
         return (
             <>
@@ -192,7 +297,15 @@ navigate(`/owner/${selectedShop.id}`, {
 
             <div className="shop-container">
                 {shop.map((shop) => (
-                    <div key={shop.id} className="card">
+                    <div
+    key={shop.id}
+    id={`shop-card-${shop.id}`}
+    className={`card ${
+        highlightShopId === shop.id
+            ? "new-shop-highlight"
+            : ""
+    }`}
+>
                         <div className="shop-info">
                             <div>
                                 <h2>{shop.name}</h2>
@@ -261,7 +374,135 @@ navigate(`/owner/${selectedShop.id}`, {
                         </div>
                     </div>
                 ))}
+                        </div>
+
+            <div className="shop-registration">
+                <p className="registration-label">FOR LOCAL SHOP OWNERS</p>
+
+                <h2>Want your shop listed on Openly?</h2>
+
+                <p>
+                    Register your shop to let people check your availability
+                    before visiting.
+                </p>
+
+                <button
+    className="register-shop-button"
+    onClick={() => {
+    setRegisterError("");
+    setShowRegister(true);
+}}
+>
+    Register Your Shop →
+</button>
             </div>
+
+            {showRegister && (
+                <div
+                    className="register-modal-overlay"
+                    onClick={() => {
+    if (!registering) setShowRegister(false);
+}}
+                >
+                    <div
+                        className="register-modal"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <button
+                            type="button"
+                            className="register-modal-close"
+                            disabled={registering}
+                            onClick={() => {
+    if (!registering) setShowRegister(false);
+}}
+                        >
+                            ×
+                        </button>
+
+                        <h2>Register Your Shop</h2>
+
+                        <p className="register-modal-description">
+                            Add your shop to Openly so customers can check
+                            your availability before visiting.
+                        </p>
+
+                        <form onSubmit={handleShopRegistration}>
+    <label>Shop Name</label>
+    <input
+        type="text"
+        placeholder="Enter shop name"
+        value={registerForm.name}
+        onChange={(e) =>
+            setRegisterForm({
+                ...registerForm,
+                name: e.target.value,
+            })
+        }
+        required
+    />
+
+    <label>Shop Address</label>
+    <input
+        type="text"
+        placeholder="Enter shop address"
+        value={registerForm.address}
+        onChange={(e) =>
+            setRegisterForm({
+                ...registerForm,
+                address: e.target.value,
+            })
+        }
+        required
+    />
+
+    <label>Initial Status</label>
+    <select
+        value={registerForm.status}
+        onChange={(e) =>
+            setRegisterForm({
+                ...registerForm,
+                status: e.target.value,
+            })
+        }
+        required
+    >
+        <option value="" disabled>Select status</option>
+        <option value="OPEN">Open</option>
+        <option value="CLOSE">Closed</option>
+    </select>
+
+    <label>Create 5-Digit PIN</label>
+    <input
+        type="password"
+        placeholder="Create 5-digit PIN"
+        inputMode="numeric"
+        maxLength={5}
+        value={registerForm.password}
+        onChange={(e) =>
+            setRegisterForm({
+                ...registerForm,
+                password: e.target.value.replace(/\D/g, "").slice(0, 5),
+            })
+        }
+        required
+    />
+
+    {registerError && (
+        <p className="owner-login-error">{registerError}</p>
+    )}
+
+    <button
+        type="submit"
+        className="register-submit-button"
+        disabled={registering}
+    >
+        {registering ? "Registering..." : "Submit Registration"}
+    </button>
+</form>
+                    </div>
+                </div>
+            )}
+
                 {selectedShop && (
     <div
         className="owner-modal-overlay"
